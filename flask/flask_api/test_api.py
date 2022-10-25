@@ -13,8 +13,8 @@ X_train, X_test, y_train, y_test = \
     train_test_split(iris['data'], iris['target'], random_state=12)
 
 # Serialize the data into json and send the request to the model
-payload = {'data': json.dumps(X_test.tolist())}
-y_predict = requests.post('http://127.0.0.1:5000/iris', data=payload).json()
+payload =  json.dumps({'data': X_test.tolist()})
+y_predict = requests.post('http://127.0.0.1:5000/iris', data=payload, headers={'Content-Type': 'application/json'}).json()
 
 # Make array from the list
 y_predict = np.array(y_predict)

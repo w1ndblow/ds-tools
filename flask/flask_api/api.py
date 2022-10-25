@@ -5,21 +5,30 @@ import numpy as np
 import json
 
 app = Flask(__name__)
-api = Api(app)
+#api = Api(app)
 
 # Create parser for the payload data
 parser = reqparse.RequestParser()
 parser.add_argument('data')
 
 # Define how the api will respond to the post requests
-class IrisClassifier(Resource):
-    def post(self):
+# @api.resource('/iris')
+# class IrisClassifier(Resource):
+#     def post(self):
+#         args = parser.parse_args()
+#         X = np.array(json.loads(args['data']))
+#         prediction = model.predict(X)
+#         return jsonify(prediction.tolist())
+
+@app.route('/iris', methods=['POST'])
+def index():
         args = parser.parse_args()
         X = np.array(json.loads(args['data']))
         prediction = model.predict(X)
         return jsonify(prediction.tolist())
 
-api.add_resource(IrisClassifier, '/iris')
+
+#api.add_resource(IrisClassifier, '/iris')
 
 if __name__ == '__main__':
     # Load model
